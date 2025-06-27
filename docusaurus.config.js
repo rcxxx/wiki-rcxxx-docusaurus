@@ -5,6 +5,8 @@
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
 import {themes as prismThemes} from 'prism-react-renderer';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -39,6 +41,11 @@ const config = {
     locales: ['zh-Hans'],
   },
 
+  themes: ['@docusaurus/theme-mermaid'],
+  markdown: {
+    mermaid: true,
+  },
+
   presets: [
     [
       'classic',
@@ -67,6 +74,15 @@ const config = {
       }),
     ],
   ],
+  stylesheets: [
+    {
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
+      type: 'text/css',
+      integrity:
+        'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
+      crossorigin: 'anonymous',
+    },
+  ],
 
   plugins: [
     'docusaurus-plugin-sass',
@@ -77,6 +93,8 @@ const config = {
         path: 'stack',
         routeBasePath: 'stack',
         sidebarPath: require.resolve('./sidebars/sidebars_stack.js'),
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
       },
     ],
   ],
@@ -101,6 +119,7 @@ const config = {
             label: '🗃️ Wiki',
             items: [
               {label: '👀 CV', to:'stack/category/perception'},
+              {label: '👀 Robot', to:'stack/category/PID'},
             ],
           },
           {
@@ -115,11 +134,14 @@ const config = {
         links: [
 
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} 🌈WIKI-RCXXX, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} 🌈RCXXX, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+      },
+      mermaid: {
+        theme: {light: 'neutral', dark: 'forest'},
       },
     }),
 };
