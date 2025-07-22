@@ -1,7 +1,7 @@
 ---
 id: path_planning_astar
 title: A* 路径规划算法
-sidebar_label: A*
+sidebar_label: A⭐
 ---
 
 
@@ -29,8 +29,8 @@ d = \sqrt{(x_1-x_2)^2+(y_1-y_2)^2}
 $$
 
 ## A* 节点数据结构
-
-- 地图内的坐标 $(x, y)$
+<details>
+<summary> 节点在地图内的坐标 $(x, y)$</summary>
 
 ``` cpp
 class Point {
@@ -43,9 +43,13 @@ public:
     }
 };
 ```
+</details>
 
 - 启发函数的代价 $g,~h,~f$
 - 指向父节点的指针 $*parent$ ，用于回溯最终路径
+
+<details>
+<summary> A* 节点</summary>
 
 ``` cpp
 class AStar_Node : public Point {
@@ -73,6 +77,7 @@ public:
     bool operator==(const AStar_Node &other) const { return x == other.x && y == other.y; }
 };
 ```
+</details>
 
 ## A* 算法流程
 
@@ -104,6 +109,9 @@ using Points            = std::vector<Point>;
 - `AStar_NodePtrPq open_list;` 获取最优节点的列表
 - `AStar_NodeMap expanded_list;` 存储所有已被拓展的节点
 - `std::unordered_set<int> closed_set;` 已被处理过的节点
+
+<details>
+<summary> 算法流程实现</summary>
 
 ``` cpp
 AStar_Planner::Points
@@ -158,6 +166,7 @@ AStar_Planner::astar_Plan(const int start_x, const int start_y, const int goal_x
     return path;
 }
 ```
+</details>
 
 ## 参考
 - **[kairaedsch / GridSearchVisualiser](https://github.com/kairaedsch/GridSearchVisualiser)**

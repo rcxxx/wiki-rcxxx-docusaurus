@@ -118,8 +118,9 @@ const config = {
             to: '/docs',
             label: '🗃️ Wiki',
             items: [
+              {label: '⌨️ Software', to:'stack/category/algorithm'},
               {label: '👀 CV', to:'stack/category/perception'},
-              {label: '👀 Robot', to:'stack/category/PID'},
+              {label: '🤖 Robot', to:'stack/category/PID'},
             ],
           },
           {
