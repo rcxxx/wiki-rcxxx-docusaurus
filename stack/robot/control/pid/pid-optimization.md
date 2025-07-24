@@ -15,6 +15,9 @@ $$
 u_{sat}(t) = min(u_{max}\, max(u_{min}\, u(t)))
 $$
 
+<details>
+<summary> Code</summary>
+
 ``` cpp
 if (output_ < output_min_) {
     output_ = output_min_;
@@ -24,6 +27,8 @@ if (output_ > output_max_) {
 }
 ```
 
+</details>
+
 ---
 
 ### 抗积分饱和
@@ -32,6 +37,9 @@ if (output_ > output_max_) {
 **解决方法**
 #### 条件积分
 - **积分项只在输出未饱和，且误差方向与控制方向一致时才累计**
+
+<details>
+<summary> Code</summary>
 
 ``` cpp
 void update(float target, float measurement, float dt){
@@ -60,6 +68,8 @@ void update(float target, float measurement, float dt){
 }
 ```
 
+</details>
+
 #### 积分分离
 
 积分项优化为
@@ -76,6 +86,9 @@ $$
 $$
 
 当误差值小于一定范围时，才进行积分项的累计
+
+<details>
+<summary> Code</summary>
 
 ``` cpp
 void update(float target, float measurement, float dt){
@@ -99,6 +112,10 @@ void update(float target, float measurement, float dt){
 }
 ```
 
+</details>
+
+
+
 #### 反计算抗饱和
 
 引入反饱和误差 `Anti-windup error`
@@ -115,6 +132,9 @@ PID 完整公式可以更新为
 $$
 u(t)=K_p\cdot e(t)+\int_{0}^{t}[K_i\cdot e(t)+K_c\cdot (u_{sat}(t)−u(t))]dt+K_d\cdot\frac{\Delta e(t)}{dt}
 $$
+
+<details>
+<summary> Code</summary>
 
 ``` cpp
 void update(float target, float measurement, float dt){
@@ -133,6 +153,8 @@ void update(float target, float measurement, float dt){
 }
 ```
 
+</details>
+
 此方法引入了一个新的参数反计算增益 $K_c$ 
 
 推荐取值范围为
@@ -150,12 +172,17 @@ $$
 D_{lp}(t)=\alpha\cdot D(t)+(1-\alpha)\cdot D(t-1),~\alpha\in[0.0,~1.0]
 $$
 
+<details>
+<summary> Code</summary>
+
 ``` cpp
 float d_term = Kd_ * (error - last_error_) / dt;
 d_term = (alpha * last_d_term) + ((1- alpha) * d_term);
 ...
 last_d_term = d_term；
 ```
+
+</details>
 
 ## 增量式 PID
 $$
@@ -188,6 +215,9 @@ $$
 \end{cases}
 $$
 
+<details>
+<summary> Code</summary>
+
 ``` cpp
 void update_Inc(float target, float measurement, float dt) {
     float error = target - measurement;
@@ -213,3 +243,5 @@ void update_Inc(float target, float measurement, float dt) {
     last_error_ = error;
 }
 ```
+
+</details>

@@ -416,6 +416,13 @@ Points JPS_Planner::jps_Plan(int start_x, int start_y, int goal_x, int goal_y) {
 
 - 这部分用循环实现有一些代码冗余，可以改为更简洁的递归实现（待整理）
 
+## JPS 算法效果
+
+在自己构建的仅黑白的 200x100 大小的地图中，jps 寻路的效果如下
+
+![](https://pictures-1304295136.cos.ap-guangzhou.myqcloud.com/wiki/robot/jps/jps_res_01.png)
+
+![](https://pictures-1304295136.cos.ap-guangzhou.myqcloud.com/wiki/robot/jps/jps_res_02.png)
 
 ## 参考
 - **[kairaedsch / GridSearchVisualiser](https://github.com/kairaedsch/GridSearchVisualiser)**

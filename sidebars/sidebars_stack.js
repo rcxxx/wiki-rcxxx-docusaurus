@@ -93,6 +93,7 @@ const sidebars_stack = {
             'robot/path_planning/grid_search/path_planning_grid_map',
             'robot/path_planning/grid_search/path_planning_astar',
             'robot/path_planning/grid_search/path_planning_jps',
+            'robot/path_planning/grid_search/path_planning_astar_optimize',
           ],
         },
 

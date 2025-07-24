@@ -29,6 +29,10 @@ $K_p$、$K_i$、$K_d$ 三个参数分别对应比例、积分、微分三个环�
 ![](https://pictures-1304295136.cos.ap-guangzhou.myqcloud.com/wiki/robot/pid/kd.png)
 
 ## C++ 代码实现
+
+<details>
+<summary> PID_Controller</summary>
+
 ``` cpp
 class PID_Controller
 {
@@ -73,6 +77,8 @@ public:
     float get_Output() { return output_; }
 };
 ```
+
+</details>
 
 **实际使用中的 PID 还需要根据实际情况进行优化，例如输出限幅，积分限幅等等**
 - [`PID 控制算法优化`](../pid/pid-optimization.md)
