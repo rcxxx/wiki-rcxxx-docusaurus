@@ -102,6 +102,39 @@ const sidebars_stack = {
   ],
 
   '⌨️ Software': [
+    // C/C++
+    {
+      type: 'category',
+      label: 'C/C++',
+      link: {
+        type: 'generated-index',
+        slug: '/category/cpp',
+      },
+      collapsed: true,
+      items: [
+        'software/cpp/cpp-pointers-reference',
+        {
+          type: "category",
+          label: "OOP",
+          collapsed: true,
+          items: [
+            'software/cpp/oop/cc-classes-and-objects',
+            'software/cpp/oop/cc-classes-inheritance',
+            'software/cpp/oop/cc-classes-virtual-function',
+          ],
+        },
+        {
+          type: "category",
+          label: "STL",
+          collapsed: true,
+          items: [
+            'software/cpp/stl/cc-stl-frame',
+            'software/cpp/stl/cc-stl-containers',
+          ],
+        },
+      ]
+    },
+    // Algorithm
     {
       type: 'category',
       label: 'Algorithm',
@@ -152,6 +185,21 @@ const sidebars_stack = {
             'software/algorithm/dp/algorithm-53-max-sub-array',
           ],
         },
+      ]
+    },
+    // design-pattern
+    {
+      type: 'category',
+      label: 'design-pattern',
+      link: {
+        type: 'generated-index',
+        slug: '/category/design-pattern',
+      },
+      collapsed: true,
+      items: [
+        'software/design-pattern/design-pattern-gof',
+        'software/design-pattern/design-pattern-singleton',
+        'software/design-pattern/design-pattern-abstract-factory',
       ]
     },
   ],

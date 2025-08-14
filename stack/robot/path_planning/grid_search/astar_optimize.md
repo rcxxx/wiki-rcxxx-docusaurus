@@ -38,18 +38,22 @@ for (int i = -pad_radius_; i <= pad_radius_; ++i) {
 2. 假设找到了最近的障碍物点 $(i,j)$, 根据其与节点的欧式距离 `std::hypot(i, j)`，计算得到 $c(n)$
 
 ``` cpp
-uchar distance = static_cast<uchar>(255 - 255 * (1 - std::hypot(i, j) / (pad_radius_ + 1)));
+auto distance = static_cast<uchar>(255 - 255 * (1 - std::hypot(i, j) / (pad_radius_ + 1)));
 ```
 - `(pad_radius_ + 1)` 避免除以 0
 - `255 - 255 * (...)` 将结果归一化到 $[0, 255]$ 范围
 - 当最终结果越小，则表示当前节点越接近障碍物，越大则表示越远离，假设周围完全没有障碍物，则为最大值 255
 
+![](https://pictures-1304295136.cos.ap-guangzhou.myqcloud.com/wiki/robot/astar/astar_optimize_cost.png)
+
+- 对单独节点的计算结果放在一起，有点类似于 OpenCV 中的距离变换的效果，这里只对访问到的节点做这个操作
+
 <details>
 <summary> 最终得到的 $c(n) 的计算代码为</summary>
 
 ``` cpp
-    uchar AStar_Planner::astar_Padding_Cost(int x, int y) {
-        uchar min_distance = 255;
+    uint8_t AStar_Planner::astar_Padding_Cost(int x, int y) {
+        uint8_t min_distance = 255;
         for (int i = -pad_radius_; i <= pad_radius_; ++i) {
             for (int j = -pad_radius_; j <= pad_radius_; ++j) {
                 if (i == 0 && j == 0) { continue; }
@@ -58,7 +62,7 @@ uchar distance = static_cast<uchar>(255 - 255 * (1 - std::hypot(i, j) / (pad_rad
                 // 超出地图的点不考虑
                 if (nx < 0 || nx >= (*grid_map_ptr_).width() || ny < 0 || ny >= (*grid_map_ptr_).height()) { continue; }
                 if ((*grid_map_ptr_).get_Point_Val(nx, ny) == 0) {
-                    uchar distance = static_cast<uchar>(255 - 255 * (1 - std::hypot(i, j) / (pad_radius_ + 1)));
+                    auto distance = 255 - static_cast<uint8_t>(255 * (1 - std::hypot(i, j) / (pad_radius_ + 1)));
                     min_distance = std::min(distance, min_distance);
                 }
             }
@@ -72,7 +76,7 @@ uchar distance = static_cast<uchar>(255 - 255 * (1 - std::hypot(i, j) / (pad_rad
 
 ![](https://pictures-1304295136.cos.ap-guangzhou.myqcloud.com/wiki/robot/astar/astar_optimize_02.png)
 
-但是从图中可以观察到，还是有很多方向并不完全一致的节点被拓展了，接下来结合 jps 规划的特性，简化一些不相关的节点，只在关键的节点附近拓展 A* 的节点，将会再进一步优化
+但是从图中可以观察到，还是有很多方向并不完全一致的节点被拓展了，接下来结合 jps 规划的特性，简化一些不相关的节点，只在关键的节点附近拓展 A* 的节点，可以得到再进一步的优化结果
 
 在相同的地图中，我们先执行一次 jps 算法，得到一条跳点紧贴障碍物的基础路径
 
@@ -82,7 +86,11 @@ uchar distance = static_cast<uchar>(255 - 255 * (1 - std::hypot(i, j) / (pad_rad
 
 ![](https://pictures-1304295136.cos.ap-guangzhou.myqcloud.com/wiki/robot/astar/jps_pipeline.png)
 
-将管道单独提取出来，作为 A* 算法的输入地图，再执行，A* 算法拓展的节点大幅减少，路径也变得更加安全。
+将管道单独提取出来，作为 A* 算法的输入地图，再执行 A* 算法
+
+![](https://pictures-1304295136.cos.ap-guangzhou.myqcloud.com/wiki/robot/astar/astar_optimize_pipeline.png)
+
+最后执行 JPS + A* 算法的结果，拓展的节点大幅减少，路径也变得更加安全
 
 ![](https://pictures-1304295136.cos.ap-guangzhou.myqcloud.com/wiki/robot/astar/astar_optimize_jps.png)
 

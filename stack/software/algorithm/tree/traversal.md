@@ -22,8 +22,8 @@ void traversal(TreeNode* cur) {
     if(cur==nullptr) {
         return;
     }
-    traversal(cur->left, v);   
-    traversal(cur->right, v);
+    traversal(cur->left);   
+    traversal(cur->right);
 }
 ```
 |Name|Value|
