@@ -12,7 +12,7 @@ sidebar_label: PID 优化
 ### 输出限幅
 - 将控制器的输出限制在一定范围内，防止控制器过大的输出
 $$
-u_{sat}(t) = min(u_{max}\, max(u_{min}\, u(t)))
+u_{sat}(t) = min(u_{max}, max(u_{min}, u(t)))
 $$
 
 <details>
