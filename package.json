@@ -25,7 +25,8 @@
     "react-dom": "^18.0.0",
     "rehype-katex": "7",
     "remark-math": "6",
-    "sass": "^1.75.0"
+    "sass": "^1.75.0",
+    "shelljs": "^0.10.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.8.1",
