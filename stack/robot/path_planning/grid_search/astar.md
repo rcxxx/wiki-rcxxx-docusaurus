@@ -1,5 +1,5 @@
 ---
-id: path_planning_astar
+id: path-planning-astar
 title: A* 路径规划算法
 sidebar_label: A⭐
 ---

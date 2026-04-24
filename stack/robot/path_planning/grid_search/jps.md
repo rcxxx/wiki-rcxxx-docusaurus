@@ -1,5 +1,5 @@
 ---
-id: path_planning_jps
+id: path-planning-jps
 title: JPS 路径规划算法
 sidebar_label: JPS
 ---

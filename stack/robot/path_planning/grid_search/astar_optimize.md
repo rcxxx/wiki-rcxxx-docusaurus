@@ -1,5 +1,5 @@
 ---
-id: path_planning_astar_optimize
+id: path-planning-astar-optimize
 title: A* 算法优化
 sidebar_label: A⭐ 优化
 ---

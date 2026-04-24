@@ -1,5 +1,5 @@
 ---
-id: robot_mahony_filter_attitude_fusion
+id: robot-mahony-filter-attitude-fusion
 title: Mahony Filter 互补滤波姿态解算
 sidebar_label: Mahony
 ---
@@ -41,14 +41,25 @@ $$ v_b = R_n^b \cdot v_n $$
 
 绕各个基本坐标轴的旋转矩阵如下（遵循右手螺旋定则）：
 绕 X 轴旋转 $\phi$ (Roll)：
-$$ R_x(\phi) = \begin{bmatrix} 1 & 0 & 0 \\ 0 & \cos\phi & \sin\phi \\ 0 & -\sin\phi & \cos\phi \end{bmatrix} $$
+$$ 
+R_x(\phi) = \begin{bmatrix} 1 & 0 & 0 \\ 0 & \cos\phi & \sin\phi \\ 0 & -\sin\phi & \cos\phi \end{bmatrix} 
+$$
+
 绕 Y 轴旋转 $\theta$ (Pitch)：
-$$ R_y(\theta) = \begin{bmatrix} \cos\theta & 0 & -\sin\theta \\ 0 & 1 & 0 \\ \sin\theta & 0 & \cos\theta \end{bmatrix} $$
+$$ 
+R_y(\theta) = \begin{bmatrix} \cos\theta & 0 & -\sin\theta \\ 0 & 1 & 0 \\ \sin\theta & 0 & \cos\theta \end{bmatrix} 
+$$
+
 绕 Z 轴旋转 $\psi$ (Yaw)：
-$$ R_z(\psi) = \begin{bmatrix} \cos\psi & \sin\psi & 0 \\ -\sin\psi & \cos\psi & 0 \\ 0 & 0 & 1 \end{bmatrix} $$
+$$ 
+R_z(\psi) = \begin{bmatrix} \cos\psi & \sin\psi & 0 \\ -\sin\psi & \cos\psi & 0 \\ 0 & 0 & 1 \end{bmatrix} 
+$$
 
 **复合旋转** 通常按照特定的顺序进行，如 **ZYX 顺序** ，则总的旋转矩阵为：
-$$ R = R_x(\phi) R_y(\theta) R_z(\psi) $$
+
+$$ 
+R = R_x(\phi) R_y(\theta) R_z(\psi) 
+$$
 
 ### 欧拉角
 欧拉角是最直观的姿态表示方法，由三次绕不同轴的旋转角度组成：
@@ -63,16 +74,28 @@ $$ R = R_x(\phi) R_y(\theta) R_z(\psi) $$
 
 #### 定义
 四元数（Quaternion）是复数的扩展，形式为：
-$$ q = q_0 + q_1 i + q_2 j + q_3 k $$
+
+$$ 
+q = q_0 + q_1 i + q_2 j + q_3 k 
+$$
+
 其中 $q_0$ 是标量部分， $(q_1, q_2, q_3)$ 是向量部分。
-满足基本虚数单位规则： $i^2 = j^2 = k^2 = ijk = -1$ 。
+满足基本虚数单位规则： 
+
+$$
+i^2 = j^2 = k^2 = ijk = -1
+$$
+
 四元数也可以写成向量形式： $q = [q_0, q_1, q_2, q_3]^T$ 。
 
 #### 基本运算
 - **加法** ：按分量相加。
 - **乘法（Hamilton积）** ：设 $p = [p_0, \mathbf{p}], q = [q_0, \mathbf{q}]$ ，则
-  $$ p \otimes q = [p_0 q_0 - \mathbf{p} \cdot \mathbf{q}, \quad p_0 \mathbf{q} + q_0 \mathbf{p} + \mathbf{p} \times \mathbf{q}] $$
+$$ 
+p \otimes q = [p_0 q_0 - \mathbf{p} \cdot \mathbf{q}, \quad p_0 \mathbf{q} + q_0 \mathbf{p} + \mathbf{p} \times \mathbf{q}] 
+$$
   展开后是一个复杂的矩阵乘积过程。注意四元数乘法 **不满足交换律** 。
+
 - **共轭（Conjugate）** ： $q^* = q_0 - q_1 i - q_2 j - q_3 k$
 - **模（Norm）** ： $|q| = \sqrt{q_0^2 + q_1^2 + q_2^2 + q_3^2}$
 - **逆（Inverse）** ： $q^{-1} = \frac{q^*}{|q|^2}$
@@ -80,19 +103,34 @@ $$ q = q_0 + q_1 i + q_2 j + q_3 k $$
 
 #### 四元数表示旋转
 任何一个绕单位轴 $\mathbf{u} = [u_x, u_y, u_z]$ 旋转角度 $\theta$ 的操作，可以用一个单位四元数表示：
-$$ q = \cos(\frac{\theta}{2}) + \sin(\frac{\theta}{2}) (u_x i + u_y j + u_z k) $$
+
+$$ 
+q = \cos(\frac{\theta}{2}) + \sin(\frac{\theta}{2}) (u_x i + u_y j + u_z k) 
+$$
+
 将一个纯向量 $\mathbf{v} = [0, v_x, v_y, v_z]$ 进行旋转，操作为：
-$$ \mathbf{v}' = q \otimes \mathbf{v} \otimes q^* $$
+
+$$ 
+\mathbf{v}' = q \otimes \mathbf{v} \otimes q^* 
+$$
 
 #### 四元数 $\rightarrow$ DCM 转换
 通过上述旋转公式，可以推导出四元数对应的 $3 \times 3$ 旋转矩阵（从导航系到机体系）：
-$$ R(q) = \begin{bmatrix}
+
+$$ 
+R(q) = \begin{bmatrix}
 q_0^2+q_1^2-q_2^2-q_3^2 & 2(q_1q_2 + q_0q_3) & 2(q_1q_3 - q_0q_2) \\
 2(q_1q_2 - q_0q_3) & q_0^2-q_1^2+q_2^2-q_3^2 & 2(q_2q_3 + q_0q_1) \\
 2(q_1q_3 + q_0q_2) & 2(q_2q_3 - q_0q_1) & q_0^2-q_1^2-q_2^2+q_3^2
-\end{bmatrix} $$
+\end{bmatrix} 
+$$
+
 注意，由于 $|q| = 1$ ，对角线元素可以化简。特别是矩阵的 **第三列** ：
-$$ R_{col3} = \begin{bmatrix} 2(q_1q_3 - q_0q_2) \\ 2(q_2q_3 + q_0q_1) \\ q_0^2-q_1^2-q_2^2+q_3^2 \end{bmatrix} $$
+
+$$ 
+R_{col3} = \begin{bmatrix} 2(q_1q_3 - q_0q_2) \\ 2(q_2q_3 + q_0q_1) \\ q_0^2-q_1^2-q_2^2+q_3^2 \end{bmatrix} 
+$$
+
 这正是导航系中的重力向量 $g_n = [0, 0, 1]^T$ 旋转到机体系后的投影！这点在后面的重力估计中极其重要。
 
 #### 四元数 $\rightarrow$ 欧拉角转换
@@ -105,9 +143,17 @@ $$ R_{col3} = \begin{bmatrix} 2(q_1q_3 - q_0q_2) \\ 2(q_2q_3 + q_0q_1) \\ q_0^2-
 我们要利用陀螺仪测量的角速度 $\boldsymbol{\omega} = [\omega_x, \omega_y, \omega_z]$ 来更新姿态。
 构造纯四元数 $\omega_q = 0 + \omega_x i + \omega_y j + \omega_z k$ 。
 根据刚体运动学，单位四元数对时间的导数为：
-$$ \dot{q} = \frac{1}{2} q \otimes \omega_q $$
+
+$$ 
+\dot{q} = \frac{1}{2} q \otimes \omega_q 
+$$
+
 展开 Hamilton 积，得到微分方程的矩阵形式：
-$$ \begin{bmatrix} \dot{q_0} \\ \dot{q_1} \\ \dot{q_2} \\ \dot{q_3} \end{bmatrix} = \frac{1}{2} \begin{bmatrix} 0 & -\omega_x & -\omega_y & -\omega_z \\ \omega_x & 0 & \omega_z & -\omega_y \\ \omega_y & -\omega_z & 0 & \omega_x \\ \omega_z & \omega_y & -\omega_x & 0 \end{bmatrix} \begin{bmatrix} q_0 \\ q_1 \\ q_2 \\ q_3 \end{bmatrix} $$
+
+$$ 
+\begin{bmatrix} \dot{q_0} \\ \dot{q_1} \\ \dot{q_2} \\ \dot{q_3} \end{bmatrix} = \frac{1}{2} \begin{bmatrix} 0 & -\omega_x & -\omega_y & -\omega_z \\ \omega_x & 0 & \omega_z & -\omega_y \\ \omega_y & -\omega_z & 0 & \omega_x \\ \omega_z & \omega_y & -\omega_x & 0 \end{bmatrix} \begin{bmatrix} q_0 \\ q_1 \\ q_2 \\ q_3 \end{bmatrix} 
+$$
+
 分量形式即为代码中使用的更新公式的基础：
 - $\dot{q_0} = \frac{1}{2}(-q_1\omega_x - q_2\omega_y - q_3\omega_z)$
 - $\dot{q_1} = \frac{1}{2}( q_0\omega_x + q_2\omega_z - q_3\omega_y)$
@@ -127,7 +173,10 @@ $$ \begin{bmatrix} \dot{q_0} \\ \dot{q_1} \\ \dot{q_2} \\ \dot{q_3} \end{bmatrix
 ### 重力方向估计
 我们利用 **上一时刻的姿态估计值 $q$** ，将导航系下的重力向量 $g_n = [0, 0, 1]^T$ 旋转到当前的机体系下，得到估计的重力向量 $\mathbf{v}_{hat}$ 。
 根据 2.4.4 节中的矩阵推导， $\mathbf{v}_{hat}$ 等于 DCM 的第三列：
-$$ \mathbf{v}_{hat} = \begin{bmatrix} 2(q_1q_3 - q_0q_2) \\ 2(q_2q_3 + q_0q_1) \\ q_0^2-q_1^2-q_2^2+q_3^2 \end{bmatrix} $$
+
+$$ 
+\mathbf{v}_{hat} = \begin{bmatrix} 2(q_1q_3 - q_0q_2) \\ 2(q_2q_3 + q_0q_1) \\ q_0^2-q_1^2-q_2^2+q_3^2 \end{bmatrix} 
+$$
 
 为了节省乘法运算，Mahony 将上式整体提取了因子 2，方便与设定的增益 towKp，towKi 合并吸收
 
@@ -137,9 +186,14 @@ halfvy = q0_ * q1_ + q2_ * q3_;
 halfvz = q0_ * q0_ - 0.5f + q3_ * q3_;
 ```
 这里 halfvz 是这么推导的
-$$ \frac{1}{2}\bigl(q_0^2+q_3^2 - (q_1^2+q_2^2)\bigr)
-= (q_0^2+q_3^2) - \frac{1}{2}\bigl(q_0^2+q_1^2+q_2^2+q_3^2\bigr) \\
-= q_0^2+q_3^2-0.5 $$
+
+$$
+\begin{aligned}
+\frac{1}{2}\bigl(q_0^2+q_3^2 - (q_1^2+q_2^2)\bigr)
+&= (q_0^2+q_3^2) - \frac{1}{2}\bigl(q_0^2+q_1^2+q_2^2+q_3^2\bigr) \\
+&= q_0^2+q_3^2-0.5
+\end{aligned}
+$$
 
 ### 误差度量：叉积
 现在我们在机体系下有了两个方向向量：
@@ -147,7 +201,11 @@ $$ \frac{1}{2}\bigl(q_0^2+q_3^2 - (q_1^2+q_2^2)\bigr)
 - **估计重力** ：刚才算出的 $\mathbf{v}_{hat}$ （在代码中是其一半 `halfv` ）
 
 如何度量两者的误差？Mahony 算法巧妙地使用了 **向量叉积** ：
-$$ \mathbf{e} = \mathbf{a}_{meas} \times \mathbf{v}_{hat} $$
+
+$$ 
+\mathbf{e} = \mathbf{a}_{meas} \times \mathbf{v}_{hat} 
+$$
+
 **几何意义** ：
 - 叉积的大小 $|\mathbf{e}| = |\mathbf{a}| \cdot |\mathbf{v}| \cdot \sin(\theta_{err})$ 。在误差角度 $\theta_{err}$ 较小时， $\sin(\theta_{err}) \approx \theta_{err}$ ，因此叉积的大小近似成正比于角度误差。
 - 叉积的方向垂直于 $\mathbf{a}$ 和 $\mathbf{v}$ 构成的平面，这正是一个 **旋转轴** ，指示了应该绕哪个轴去旋转 $\mathbf{v}_{hat}$ 才能使它与 $\mathbf{a}_{meas}$ 对齐！
@@ -166,18 +224,29 @@ halfez = (ax * halfvy - ay * halfvx);
 - **积分项（I）** ： $\boldsymbol{\omega}_{corr\_I} = \int (K_i \cdot \mathbf{e}) dt$ 。累积历史误差，用于消除陀螺仪固有的常值零偏（Bias）。代码中引入了积分限幅 `clamp3` 防止积分饱和（Windup）。
 
 最终修正后的角速度为：
-$$ \boldsymbol{\omega} = \boldsymbol{\omega}_{gyro} + K_p \mathbf{e} + K_i \int \mathbf{e} dt $$
+
+$$ 
+\boldsymbol{\omega} = \boldsymbol{\omega}_{gyro} + K_p \mathbf{e} + K_i \int \mathbf{e} dt 
+$$
 
 **关于参数 `twoKp` 和 `twoKi`** ：
 因为我们在前面计算重力和误差时，省略了系数 2（使用了 `halfv` 和 `halfe` ），真实的误差向量其实是代码中 `halfe` 的 2 倍。
 因此修正公式变为：
-$$ \boldsymbol{\omega}_{corr} = K_p \cdot (2 \cdot \mathbf{e}_{half}) + K_i \int (2 \cdot \mathbf{e}_{half}) dt $$
+
+$$ 
+\boldsymbol{\omega}_{corr} = K_p \cdot (2 \cdot \mathbf{e}_{half}) + K_i \int (2 \cdot \mathbf{e}_{half}) dt 
+$$
+
 为了代码计算效率，直接定义参数 `twoKp` $= 2K_p$ ， `twoKi` $= 2K_i$ 。
 
 ### 四元数更新（一阶欧拉积分）
 有了修正后的角速度 $\boldsymbol{\omega} = [g_x, g_y, g_z]$ ，我们利用 2.5 节的微分方程进行数值积分更新姿态。
 采用简单高效的一阶欧拉积分：
-$$ q_{k+1} = q_k + \dot{q} \cdot \Delta t = q_k + (\frac{1}{2} q_k \otimes \boldsymbol{\omega}_q) \Delta t $$
+
+$$ 
+q_{k+1} = q_k + \dot{q} \cdot \Delta t = q_k + (\frac{1}{2} q_k \otimes \boldsymbol{\omega}_q) \Delta t 
+$$
+
 代码实现中的优化：由于都有 $\frac{1}{2} \Delta t$ ，可以先将其乘到角速度上：
 ```cpp
 const float half_dt = 0.5f * dt;
@@ -199,7 +268,11 @@ q1_ += ( qa * gx + qc * gz - q3_ * gy);
 为了让系统没有震荡且响应最快，通常配置为 **临界阻尼** ，此时极点在负实轴重合，设为 $-\beta$ 。
 特征方程变为 $(s+\beta)^2 = s^2 + 2\beta s + \beta^2 = 0$ 。
 由此得出：
-$$ K_p = 2\beta, \quad K_i = \beta^2 $$
+
+$$ 
+K_p = 2\beta, \quad K_i = \beta^2 
+$$
+
 而 $\beta$ 与系统响应时间常数 $\tau$ 之间存在经验对应关系： $\beta \approx \frac{2.146}{\tau}$ 。
 因此，给定所需的滤波时间常数（即系统信任陀螺仪积分的持续时间段），就可以自动推算出相应的 PI 增益。代码中的 `kp_scale` 和 `ki_scale` 是为了提供额外的微调能力。
 

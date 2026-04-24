@@ -1,5 +1,5 @@
 ---
-id: robot_sensors_butter_worth_filter
+id: robot-sensors-butter-worth-filter
 title: 二阶巴特沃斯滤波器
 sidebar_label: IIR LPF
 ---

@@ -120,11 +120,11 @@ void update(float target, float measurement, float dt){
 
 引入反饱和误差 `Anti-windup error`
 $$
-e_{aw}​(t)=u_{sat}(t)−u(t)
+e_{aw}(t)=u_{sat}(t)−u(t)
 $$
 积分项更新为
 $$
-\frac{dI(t)}{dt}=K_i\cdot e(t)+K_c\cdot e_{aw}​(t)
+\frac{dI(t)}{dt}=K_i\cdot e(t)+K_c\cdot e_{aw}(t)
 $$
 实际的输出为输出限幅后的 $u_{sat}(t)$
 

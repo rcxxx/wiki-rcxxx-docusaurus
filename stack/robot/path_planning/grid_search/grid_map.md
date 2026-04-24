@@ -1,5 +1,5 @@
 ---
-id: path_planning_grid_map
+id: path-planning-grid-map
 title: 二维栅格地图
 sidebar_label: Grid Map
 ---
@@ -23,18 +23,20 @@ $$
 
 假设机器人的状态表示为 $(x,y,\theta)$，需要转换前方距离为 $d$ 的点
 $$
+\begin{aligned}
 x_{d_i} = x_i + d\cdot \sin(\theta)\\
 y_{d_i} = y_i + d\cdot \cos(\theta)
+\end{aligned}
 $$
 
 假设真实的世界坐标系选择使用右手系，则 x 轴与地图的 x 轴相反，转换的计算则为
 $$
-\begin{align*}
+\begin{aligned}
 x_{d_i}&=x_i + d\cdot \sin(-\theta)\\
 &=x_i - d\cdot \sin(\theta)\\
 y_{d_i}&= y_i + d\cdot \cos(-\theta)\\
 &= y_i + d\cdot \cos(\theta)
-\end{align*}
+\end{aligned}
 $$
 
 ### 栅格地图的表示
@@ -85,7 +87,10 @@ uchar get_Val(int x, int y) const {
 
 **Bit_Map 类**
 
-``` cpp title="bit_map.h"
+<details>
+<summary> bit_map.h </summary>
+
+``` cpp
 #ifndef BIT_MAP_H
 #define BIT_MAP_H
 
@@ -139,7 +144,14 @@ void convert_BitMap_To_Mat(const BitMap& bit_map, cv::Mat& dst);
 #endif //BIT_MAP_H
 ```
 
-``` cpp title="bit_map.cpp"
+</details>
+
+---
+
+<details>
+<summary> bit_map.cpp </summary>
+
+``` cpp
 #include "traj_bit_map.h"
 
 BitMap::BitMap(int _rows, int _cols) {
@@ -264,3 +276,5 @@ void convert_BitMap_To_Mat(const BitMap &bit_map, cv::Mat &dst) {
     }
 }
 ```
+
+</details>

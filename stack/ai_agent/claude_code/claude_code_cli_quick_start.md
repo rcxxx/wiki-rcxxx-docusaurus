@@ -1,7 +1,7 @@
 ---
-id: claude-code-cli-install
+id: claude-code-cli-quick-start
 title: 安装 Claude Code 命令行工具
-sidebar_label: start
+sidebar_label: Qucik Start
 ---
 
 ## About
@@ -64,9 +64,9 @@ claude
 │                                                    │ Tips for getting        │
 │                    Welcome back!                   │ started                 │
 │                                                    │ Run /init to create a … │
-│                       ▐▛███▜▌                      │ ─────────────────────── │
-│                      ▝▜█████▛▘                     │ Recent activity         │
-│                        ▘▘ ▝▝                       │ No recent activity      │
+│                       ▐▛███▜▌                    │ ─────────────────────── │
+│                      ▝▜█████▛▘                  │ Recent activity         │
+│                        ▘▘ ▝▝                    │ No recent activity      │
 │                                                    │                         │
 │ Opus 4.6 (1M context) with hi… · API Usage Billing │                         │
 │                                                    │                         │

@@ -22,7 +22,7 @@ const FeatureList = [
       </>
     ),
     img: 'img/icons/head/re-01.png',
-    link: 'projects/category/projects/',
+    link: '#',
   },
   {
     title: 'Notes',
@@ -32,7 +32,7 @@ const FeatureList = [
       </>
     ),
     img: 'img/icons/head/C2.png',
-    link: 'notes/',
+    link: '#',
   },
 ];
 

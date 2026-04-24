@@ -1,5 +1,5 @@
 ---
-id: vmware_shared_floders
+id: vmware-shared-floders
 title: 主机与 VMware 虚拟机共享文件夹
 sidebar_label: VMware 共享文件夹
 ---

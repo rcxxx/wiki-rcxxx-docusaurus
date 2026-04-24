@@ -21,24 +21,24 @@ const FeatureList = [
 
 function GameBoy({img}){
     return(
-        <div class={styles['gameboy']}>
-        <div class={styles['body']}></div>
-        <div class={styles['screen-box']}>
-          <div class={styles['decorate']}></div>
-          <div class={styles['screen']}>
+        <div className={styles['gameboy']}>
+        <div className={styles['body']}></div>
+        <div className={styles['screen-box']}>
+          <div className={styles['decorate']}></div>
+          <div className={styles['screen']}>
             <img src={img} />
           </div>
         </div>
-        <div class={styles['lights']}></div>
-        <div class={styles['buttons-1']}></div>
-        <div class={styles['buttons-2']}></div>
-        <div class={styles['buttons-2-2']}></div>
-        <div class={styles['pad-back']}>
-          <div class={styles['pad-top']}></div>
+        <div className={styles['lights']}></div>
+        <div className={styles['buttons-1']}></div>
+        <div className={styles['buttons-2']}></div>
+        <div className={styles['buttons-2-2']}></div>
+        <div className={styles['pad-back']}>
+          <div className={styles['pad-top']}></div>
         </div>
-        <div class={styles['details-top']}></div>
-        <div class={styles['details-back']}>
-          <div class={styles['details-r']}></div>
+        <div className={styles['details-top']}></div>
+        <div className={styles['details-back']}>
+          <div className={styles['details-r']}></div>
         </div>
       </div>
     );

@@ -5,6 +5,7 @@
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
 import {themes as prismThemes} from 'prism-react-renderer';
+import {catppuccinLatte, catppuccinMocha} from './src/theme/prism-catppuccin.js';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
@@ -41,7 +42,19 @@ const config = {
     locales: ['zh-Hans'],
   },
 
-  themes: ['@docusaurus/theme-mermaid'],
+  themes: [
+    '@docusaurus/theme-mermaid',
+    [
+      '@easyops-cn/docusaurus-search-local',
+      {
+        hashed: true,
+        language: ['en', 'zh'],
+        docsPluginIdForPreferredVersion: 'stack',
+        docsRouteBasePath: ['docs', 'stack'],
+        indexBlog: false,
+      },
+    ],
+  ],
   markdown: {
     mermaid: true,
   },
@@ -76,11 +89,13 @@ const config = {
   ],
   stylesheets: [
     {
-      href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css',
       type: 'text/css',
-      integrity:
-        'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
       crossorigin: 'anonymous',
+    },
+    {
+      href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap',
+      type: 'text/css',
     },
   ],
 
@@ -121,6 +136,7 @@ const config = {
               {label: '⌨️ Software', to:'stack/category/algorithm'},
               {label: '👀 CV', to:'stack/category/perception'},
               {label: '🤖 Robot', to:'stack/category/PID'},
+              {label: '🦉 AI Agent', to:'stack/category/claude-code'},
             ],
           },
           {
@@ -138,8 +154,9 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} 🌈RCXXX, Inc. Built with Docusaurus.`,
       },
       prism: {
-        theme: prismThemes.github,
-        darkTheme: prismThemes.dracula,
+        theme: catppuccinLatte,
+        darkTheme: catppuccinMocha,
+        additionalLanguages: ['bash', 'json', 'diff', 'cmake', 'makefile'],
       },
       mermaid: {
         theme: {light: 'neutral', dark: 'forest'},

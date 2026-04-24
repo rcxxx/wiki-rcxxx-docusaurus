@@ -9,3 +9,6 @@ sidebar_label: plugins
 
 实时统计上下文，token 用量，查看任务状态
 
+## superpowers
+
+## 
