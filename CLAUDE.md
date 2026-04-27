@@ -77,21 +77,21 @@
 
 ## Git Commit 规范
 
-使用 Gitmoji 前缀区分提交类型，格式为 `<emoji> [日期]: 简要描述`。
+使用 Gitmoji 前缀区分提交类型，格式为 `<emoji> <type>: 简要描述`。
 
 常用 emoji：
 
-| Emoji | 含义 |
-|---|---|
-| ✨ | 新功能/新内容 |
-| 📝 | 文档更新 |
-| 🐛 | 修复 bug |
-| 💄 | UI/样式调整 |
-| ♻️ | 重构 |
-| ⬆️ | 升级依赖 |
-| ➕ | 添加依赖 |
-| 🔧 | 配置修改 |
-| 🗑️ | 删除文件/代码 |
-| 🚀 | 部署 |
+| Emoji | Type | 含义 |
+|---|---|---|
+| ✨ | feat | 新功能/新内容 |
+| 📝 | docs | 文档更新 |
+| 🐛 | fix | 修复 bug |
+| 💄 | style | UI/样式调整 |
+| ♻️ | refactor | 重构 |
+| ⬆️ | upgrade | 升级依赖 |
+| ➕ | deps | 添加依赖 |
+| 🔧 | config | 配置修改 |
+| 🗑️ | remove | 删除文件/代码 |
+| 🚀 | deploy | 部署 |
 
-示例：`📝 [2026-04-27]: update plugins documentation`
+示例：`📝 docs: update plugins documentation`
