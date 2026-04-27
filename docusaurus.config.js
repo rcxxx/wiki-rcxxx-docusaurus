@@ -16,8 +16,8 @@ const config = {
   // favicon: 'img/favicon.ico',
   favicon: 'img/icons/terminal.png',
   // Set the production url of your site here
-  url: 'https://rcxxx.github.io',
-  baseUrl: '/wiki/',
+  url: 'https://sinnammanyo.cn',
+  baseUrl: '/',
 
   organizationName: 'rcxxx',
   projectName: 'rcxxx.github.io',
