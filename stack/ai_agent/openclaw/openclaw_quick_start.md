@@ -219,6 +219,206 @@ docker exec -it openclaw openclaw tui
 
 可以直接使用
 
+### 接入飞书
+首先参照文档，在飞书开放平台中创建机器人，并配置好相应权限，将应用发布出来
+
+- opencalw 添加 channels
+
+```bash
+openclaw channels add
+```
+
+按选项选择 "Feishu/Lark" 输入相应的信息，添加后重启网关
+
+```bash
+openclaw gateway restart
+openclaw gateway status
+```
+
+这里贴一个多 agent 配置飞书的配置文件
+
+<details>
+<summary> openclaw.json</summary>
+
+```json
+{
+  "meta": {
+    "lastTouchedVersion": "x",
+    "lastTouchedAt": "x"
+  },
+  "wizard": {
+    "lastRunAt": "x",
+    "lastRunVersion": "x",
+    "lastRunCommand": "doctor",
+    "lastRunMode": "local"
+  },
+  "auth": {
+    "profiles": {
+      "google:default": {
+        "provider": "google",
+        "mode": "api_key"
+      }
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "custom-127-0-0-1-3000": {
+        "baseUrl": "http://127.0.0.1:3000/v1",
+        "apiKey": "sk-xxx",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "gemini-3.1-pro-preview",
+            "name": "gemini-3.1-pro-preview (Custom Provider)",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 2,
+              "output": 12,
+              "cacheRead": 0.2,
+              "cacheWrite": 0
+            },
+            "contextWindow": 1048576,
+            "maxTokens": 65536
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "custom-127-0-0-1-3000/gemini-3.1-pro-preview",
+        "fallbacks": [
+        ]
+      },
+      "models": {
+        "custom-127-0-0-1-3000/gemini-3.1-pro-preview": {}
+      },
+      "workspace": "/home/node/.openclaw/workspace"
+    },
+    "list": [
+      {
+        "id": "main"
+      },
+      {
+        "id": "owl",
+        "name": "owl",
+        "workspace": "/home/node/.openclaw/workspace/owl",
+        "agentDir": "/home/node/.openclaw/agents/owl/agent",
+        "model": "custom-127-0-0-1-3000/gemini-3.1-pro-preview"
+      },
+      {
+        "id": "peacock",
+        "name": "peacock",
+        "workspace": "/home/node/.openclaw/workspace/peacock",
+        "agentDir": "/home/node/.openclaw/agents/peacock/agent",
+        "model": "custom-127-0-0-1-3000/gemini-3.1-pro-preview"
+      },
+      {
+        "id": "peregrine",
+        "name": "peregrine",
+        "workspace": "/home/node/.openclaw/workspace/peregrine",
+        "agentDir": "/home/node/.openclaw/agents/peregrine/agent",
+        "model": "custom-127-0-0-1-3000/gemini-3.1-pro-preview"
+      }
+    ]
+  },
+  "bindings": [
+    {
+      "type": "route",
+      "agentId": "owl",
+      "match": {
+        "channel": "feishu",
+        "accountId": "owl"
+      }
+    },
+    {
+      "type": "route",
+      "agentId": "peacock",
+      "match": {
+        "channel": "feishu",
+        "accountId": "peacock"
+      }
+    },
+    {
+      "type": "route",
+      "agentId": "peregrine",
+      "match": {
+        "channel": "feishu",
+        "accountId": "peregrine"
+      }
+    }
+  ],
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "channels": {
+    "feishu": {
+      "enabled": true,
+      "connectionMode": "websocket",
+      "domain": "feishu",
+      "accounts": {
+        "owl": {
+          "enabled": true,
+          "appId": "cli_a***************",
+          "appSecret": "********************************",
+          "connectionMode": "websocket"
+        },
+        "peacock": {
+          "enabled": true,
+          "appId": "cli_a***************",
+          "appSecret": "********************************",
+          "connectionMode": "websocket"
+        },
+        "peregrine": {
+          "enabled": true,
+          "appId": "cli_a***************",
+          "appSecret": "********************************",
+          "connectionMode": "websocket"
+        },
+        "default": {
+          "groupPolicy": "open"
+        }
+      },
+      "tools": {
+        "perm": true
+      }
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "xx"
+    }
+  },
+  "plugins": {
+    "load": {
+      "paths": [
+        "/app/extensions/feishu"
+      ]
+    },
+    "entries": {
+      "feishu": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+</details>
+
+
 ## 参考
 
 - **[一文教你 OpenClaw Docker 部署并调用本地 Qwen3.5 9B 模型](https://jishuzhan.net/article/2031904754910167042)**
+- **[一文完全搞懂OpenClaw（Clawdbot）附飞书对接教程！](https://www.feishu.cn/content/article/7602519239445974205)**
+- **[第四章 聊天平台接入](https://datawhalechina.github.io/hello-claw/cn/adopt/chapter4/)**
