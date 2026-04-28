@@ -5,11 +5,6 @@
   width: 100%;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
-}
-
 .card-box {
   flex: 0 0 30%;
   padding: 1rem;
@@ -34,13 +29,13 @@
 }
 .card:hover {
   height: 18rem;
-}   
+}
 html[data-theme='dark'] .card {
-    background-color: #2b2b2b;
-    box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.25);
+  background-color: #2b2b2b;
+  box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.25);
 }
 
-.card-img-box{
+.card-img-box {
   position: absolute;
   width: 120px;
   height: 120px;
@@ -53,7 +48,7 @@ html[data-theme='dark'] .card {
   transition: 0.4s;
 }
 
-.card:hover .card-img-box{
+.card:hover .card-img-box {
   width: 150px;
   height: 150px;
   top: -25%;
@@ -84,7 +79,6 @@ html[data-theme='dark'] .card {
   width: 100%;
   transition: 0.5s;
   transform: translateY(40%);
-  /* margin-bottom: 10%; */
 }
 
 .card:hover .content .details {
@@ -94,17 +88,17 @@ html[data-theme='dark'] .card {
 @font-face {
   font-family: "PixelCowboy Font";
   src: url("/static/fonts/PixelCowboy-l7we.ttf") format("truetype");
-  /* font-display: swap; */
+  font-display: swap;
 }
 
 .card .content .details h3 {
   font-family: 'PixelCowboy Font';
   font-size: 2em;
-  font-weight: 600px;
+  font-weight: 600;
   line-height: 1.2em;
 }
-[data-theme='dark'] .card .content .details h2 {
-    color: rgb(218, 218, 218);
+html[data-theme='dark'] .card .content .details h3 {
+  color: rgb(218, 218, 218);
 }
 
 .card .content .details .description {
@@ -112,8 +106,8 @@ html[data-theme='dark'] .card {
   font-size: 1.05em;
   opacity: 0.5;
 }
-[data-theme='dark'] .card .content .details .description {
-    color: rgb(218, 218, 218);
+html[data-theme='dark'] .card .content .details .description {
+  color: rgb(218, 218, 218);
 }
 
 .card .card-button {
@@ -130,7 +124,7 @@ html[data-theme='dark'] .card {
 @font-face {
   font-family: "MiniPixel7 Font";
   src: url("/static/fonts/MiniPixel7-6LKv.ttf") format("truetype");
-  /* font-display: swap; */
+  font-display: swap;
 }
 
 .card .card-button .warp .button {

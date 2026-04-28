@@ -6,31 +6,19 @@ import Link from '@docusaurus/Link';
 const FeatureList = [
   {
     title: 'Stack',
-    description: (
-      <>
-        不用心的学习笔记
-      </>
-    ),
+    description: '不用心的学习笔记',
     img: 'img/icons/head/lzumi-06.png',
     link: 'docs/',
   },
   {
     title: 'Projects',
-    description: (
-      <>
-        简单搞搞的好玩项目
-      </>
-    ),
+    description: '简单搞搞的好玩项目',
     img: 'img/icons/head/re-01.png',
     link: '#',
   },
   {
     title: 'Notes',
-    description: (
-      <>
-        没有内涵的文章摘抄
-      </>
-    ),
+    description: '没有内涵的文章摘抄',
     img: 'img/icons/head/C2.png',
     link: '#',
   },
@@ -39,27 +27,25 @@ const FeatureList = [
 function Feature({title, description, img, link}) {
   return (
     <div className={clsx('col col--4', styles['card-box'])}>
-      <div className={styles['card']}>
+      <div className={styles.card}>
         <div className={styles['card-img-box']}>
-          <img src={img}></img>
+          <img src={img} alt={title} />
         </div>
-        <div className={styles['content']}>
-          <div className={styles['details']}>
+        <div className={styles.content}>
+          <div className={styles.details}>
             <Heading as="h3">{title}</Heading>
-            <div className={styles['description']}>
+            <div className={styles.description}>
               {description}
             </div>
-            <div class={clsx('text--center',styles['card-button'])}>
-              <div class={styles['warp']}>
+            <div className={clsx('text--center', styles['card-button'])}>
+              <div className={styles.warp}>
                 <Link to={link}>
-                  <button class={styles['button']}>🌈Portal</button>
+                  <button className={styles.button}>🌈Portal</button>
                 </Link>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="text--center">
       </div>
     </div>
   );
